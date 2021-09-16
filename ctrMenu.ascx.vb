@@ -1,5 +1,5 @@
 ﻿
-Partial Class NewExtranet_ctrMenu
+Partial Class ctrMenu
     Inherits System.Web.UI.UserControl
     Dim blnParaTestar As Boolean = CBool(System.Configuration.ConfigurationManager.AppSettings("Teste"))
 
@@ -11,7 +11,4 @@ Partial Class NewExtranet_ctrMenu
 
     End Sub
 
-    Protected Sub lnkSair_Click(sender As Object, e As EventArgs) Handles lnkSair.Click
-        Response.Redirect("http://www.google.com.br")
-    End Sub
 End Class

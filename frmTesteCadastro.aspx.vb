@@ -156,7 +156,6 @@ Partial Class frmTesteCadastro
             LimparCampos()
             CarregarListaAluno()
             'CarregarGridDocumentos()
-            opList.Visible = True
             MsgBox("Registro alterado com sucesso!", eCategoriaMensagem.SUCESSO)
 
         End With
@@ -284,12 +283,11 @@ Partial Class frmTesteCadastro
         End Select
     End Sub
 
-    Protected Sub btnLitagem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLitagem.Click
+    Protected Sub btnLitagem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVoltar.Click
 
         cadastro.Visible = False
         listagem.Visible = True
         CarregarGridDocumentos()
-        opList.Visible = False
 
     End Sub
 

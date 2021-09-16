@@ -16,7 +16,7 @@ Public Class Aluno
     Private CI01_NU_TELEFONE As String
 
 
-    Public Property Codigo() As Integer
+    Public Property Aluno As Integer
         Get
             Return CI01_ID_ALUNO
         End Get
@@ -25,7 +25,7 @@ Public Class Aluno
         End Set
     End Property
 
-    Public Property NomeAluno() As String
+    Public Property NomeAluno As String
         Get
             Return CI01_NM_ALUNO
         End Get
@@ -34,7 +34,7 @@ Public Class Aluno
         End Set
     End Property
 
-    Public Property CPF() As String
+    Public Property CPF As String
         Get
             Return CI01_NU_CPF
         End Get
@@ -42,7 +42,7 @@ Public Class Aluno
             CI01_NU_CPF = Value
         End Set
     End Property
-    Public Property Nacionalidade() As String
+    Public Property Nacionalidade As String
         Get
             Return CI01_NM_NACIONALIDADE
         End Get
@@ -50,7 +50,7 @@ Public Class Aluno
             CI01_NM_NACIONALIDADE = Value
         End Set
     End Property
-    Public Property Cep() As String
+    Public Property Cep As String
         Get
             Return CI01_NU_CEP
         End Get
@@ -58,7 +58,7 @@ Public Class Aluno
             CI01_NU_CEP = Value
         End Set
     End Property
-    Public Property Estado() As String
+    Public Property Estado As String
         Get
             Return CI01_NU_ESTADO
         End Get
@@ -66,7 +66,7 @@ Public Class Aluno
             CI01_NU_ESTADO = Value
         End Set
     End Property
-    Public Property Cidade() As String
+    Public Property Cidade As String
         Get
             Return CI01_NM_CIDADE
         End Get
@@ -74,7 +74,7 @@ Public Class Aluno
             CI01_NM_CIDADE = Value
         End Set
     End Property
-    Public Property Logradouro() As String
+    Public Property Logradouro As String
         Get
             Return CI01_NM_LOGRADOURO
         End Get
@@ -82,7 +82,7 @@ Public Class Aluno
             CI01_NM_LOGRADOURO = Value
         End Set
     End Property
-    Public Property Email() As String
+    Public Property Email As String
         Get
             Return CI01_NM_EMAIL
         End Get
@@ -90,7 +90,7 @@ Public Class Aluno
             CI01_NM_EMAIL = Value
         End Set
     End Property
-    Public Property Telefone() As String
+    Public Property Telefone As String
         Get
             Return CI01_NU_TELEFONE
         End Get
@@ -113,7 +113,7 @@ Public Class Aluno
 
         strSQL.Append(" select * ")
         strSQL.Append(" from CI01_ALUNO")
-        strSQL.Append(" where CI01_ID_ALUNO = " & Codigo)
+        strSQL.Append(" where CI01_ID_ALUNO = " & Aluno)
 
         dt = cnn.EditarDataTable(strSQL.ToString)
 
