@@ -10,19 +10,35 @@ Partial Class frmTesteCadastro
 
         If Not Page.IsPostBack Then
             CarregarListaAluno()
-
+            HabilitarSecao()
+            HabilitarCampos()
         End If
-
-        'grdDocumento.Visible = False
 
         Validacao.Outros(txtCPF_Pai, False, "CPF",, Validacao.eFormato.CPF)
         Validacao.Outros(txtCPF_Mae, False, "CPF",, Validacao.eFormato.CPF)
         Validacao.Outros(txtTelefoneResp, False, "CPF",, Validacao.eFormato.CELULAR)
-        JavaScript.ExibirConfirmacao(btnSalvar, eTipoConfirmacao.SALVAR)
 
     End Sub
 
 #Region "Funções de Cadastro"
+
+    Private Sub HabilitarSecao(Optional hab As Boolean = False)
+        cadastro.Visible = hab
+        listagem.Visible = Not hab
+    End Sub
+
+    Private Sub HabilitarCampos(Optional hab As Boolean = False)
+        txtNomeMae.Enabled = hab
+        txtCPF_Mae.Enabled = hab
+        txtNomePai.Enabled = hab
+        txtCPF_Pai.Enabled = hab
+        txtTelefoneResp.Enabled = hab
+        txtRG.Enabled = hab
+        txtDateEmissaoRG.Enabled = hab
+        txtDataNascimento.Enabled = hab
+        drpSexo.Enabled = hab
+    End Sub
+
     Private Function VerificarCpf() As Boolean
         Dim objDocumento As New Documento
         Dim Existe As Boolean = False
@@ -131,13 +147,13 @@ Partial Class frmTesteCadastro
 
     Private Sub CarregarDocumento(ByVal Codigo As Integer)
         Dim objDocumento As New Documento(Codigo)
-        Dim dat, dat2 As Date
+        'Dim dat, dat2 As Date
 
         With objDocumento
             ViewState("CodigoDocumento") = .CodigoDocumento
 
-            dat = Convert.ToDateTime(.EmissaoAluno)
-            dat2 = Convert.ToDateTime(.NascimentoAluno)
+            'dat = Convert.ToDateTime(.EmissaoAluno)
+            'dat2 = Convert.ToDateTime(.NascimentoAluno)
 
             drpAluno.Text = .CodigoAluno
             txtNomeMae.Text = .NomeMae
@@ -146,8 +162,13 @@ Partial Class frmTesteCadastro
             txtCPF_Pai.Text = .CPF_PAI
             txtTelefoneResp.Text = .TelefoneResponsavel
             txtRG.Text = .RgAluno
-            txtDateEmissaoRG.Text = dat.ToString("yyyy-MM-dd")
-            txtDataNascimento.Text = dat2.ToString("yyyy-MM-dd")
+
+            txtDateEmissaoRG.Text = DoBanco(.EmissaoAluno, eTipoValor.DATA)
+            txtDataNascimento.Text = DoBanco(.NascimentoAluno, eTipoValor.DATA)
+
+
+            'txtDateEmissaoRG.Text = dat.ToString("yyyy-MM-dd")
+            'txtDataNascimento.Text = dat2.ToString("yyyy-MM-dd")
             drpSexo.SelectedValue = .SexoAluno
             MsgBox("Registro Carregado com sucesso!", eCategoriaMensagem.SUCESSO)
         End With
@@ -179,7 +200,7 @@ Partial Class frmTesteCadastro
             .DataValueField = "CI01_ID_ALUNO"
             .DataTextField = "CI01_NM_ALUNO"
             .DataBind()
-            '.Items.Insert(0, "Selecione um Aluno")
+            .Items.Insert(0, "Selecione um Aluno")
             .SelectedIndex = 0
 
         End With
@@ -197,6 +218,8 @@ Partial Class frmTesteCadastro
 
         lblRegistros.Text = DirectCast(grdDocumento.DataSource, Data.DataTable).Rows.Count & " Registro(s)"
     End Sub
+
+
 #End Region
 
 #Region "Eventos de Listagem"
@@ -209,9 +232,7 @@ Partial Class frmTesteCadastro
 
         ElseIf e.CommandName = "EDITAR" Then
             CarregarDocumento(grdDocumento.DataKeys(e.CommandArgument).Item(0))
-            btnSalvar.Visible = False
-            listagem.Visible = False
-            cadastro.Visible = True
+            HabilitarCampos(True)
 
         ElseIf e.CommandName = "ENVIAR" Then
             Session("CodigoDocumento") = grdDocumento.DataKeys(e.CommandArgument).Item(0)
@@ -248,12 +269,8 @@ Partial Class frmTesteCadastro
 
 
 
-    Protected Sub btnLitagem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVoltar.Click
-
-        cadastro.Visible = False
-        listagem.Visible = True
-        CarregarGridDocumentos()
-
+    Protected Sub btnVoltar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVoltar.Click
+        HabilitarSecao()
     End Sub
 
     Private Sub drpAluno_DataBound(sender As Object, e As EventArgs) Handles drpAluno.DataBound
@@ -262,6 +279,22 @@ Partial Class frmTesteCadastro
 
     Private Sub drpAluno_TextChanged(sender As Object, e As EventArgs) Handles drpAluno.TextChanged
 
+    End Sub
+
+    Private Sub btnLocalizar_Click(sender As Object, e As EventArgs) Handles btnLocalizar.Click
+        CarregarGridDocumentos()
+    End Sub
+
+    Private Sub drpAluno_SelectedIndexChanged(sender As Object, e As EventArgs) Handles drpAluno.SelectedIndexChanged
+        If drpAluno.SelectedIndex = 0 Then
+            HabilitarCampos()
+        Else
+            HabilitarCampos(True)
+        End If
+    End Sub
+
+    Private Sub btnNovo_Click(sender As Object, e As EventArgs) Handles btnNovo.Click
+        HabilitarSecao(True)
     End Sub
 
 

@@ -14,11 +14,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        Alunos<br/>
-                                        <asp:DropDownList ID="drpTipoLicenca" ValidationGroup="form" AutoPostBack="true" runat="server" class="form-control select2 col-sm-12">
-                                        </asp:DropDownList>
-                                        <asp:RequiredFieldValidator ID="rfv1" runat="server" ValidationGroup="form" ControlToValidate="drpTipoLicenca" InitialValue="0" ErrorMessage="Obrigatório selecionar um tipo de licença" />
-                                        <asp:DropDownList ID="drpAluno" class="form-control" required="required" runat="server" AutoPostBack="True" />
+                                        Alunos<br />
+                                        <asp:DropDownList ID="drpAluno" ValidationGroup="form" AutoPostBack="true" runat="server" class="form-control select2 col-sm-12" />
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +27,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="CPF_Mae">CPF da mãe:</label>
-                                        <asp:TextBox runat="server" required="required" class="form-control" type="text" ID="txtCPF_Mae" name="CPF_Mae"  MaxLength="14" />
+                                        <asp:TextBox runat="server" required="required" class="form-control" type="text" ID="txtCPF_Mae" name="CPF_Mae" MaxLength="14" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -42,11 +39,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="CPF_Pai">CPF do pai:</label>
-                                        <asp:TextBox runat="server" class="form-control"
-                                            type="text"
-                                            ID="txtCPF_Pai"
-                                            name="CPF_Pai"
-                                            MaxLength="14" />
+                                        <asp:TextBox runat="server" class="form-control" type="text" ID="txtCPF_Pai" name="CPF_Pai" MaxLength="14" />
                                     </div>
                                 </div>
                             </div>
@@ -54,12 +47,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="TelefoneResp">Telefone do Responsável:</label>
-                                        <asp:TextBox runat="server" required="required" class="form-control"
-                                            type="tel"
-                                            ID="txtTelefoneResp"
-                                            name="TelefoneResp"
-                                            placeholder="Ex.: (11) 2020-3030"
-                                            MaxLength="15" />
+                                        <asp:TextBox runat="server" required="required" class="form-control" type="tel" ID="txtTelefoneResp" name="TelefoneResp" placeholder="Ex.: (11) 2020-3030" MaxLength="15" />
                                     </div>
                                 </div>
                             </div>
@@ -67,34 +55,20 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="RG">RG do aluno:</label>
-                                        <asp:TextBox runat="server" required="required" class="form-control"
-                                            type="text"
-                                            ID="txtRG"
-                                            name="RG"
-                                            placeholder="Ex.: 0100111110011-0"
-                                            MaxLength="14" />
+                                        <asp:TextBox runat="server" required="required" class="form-control" type="text" ID="txtRG" name="RG" placeholder="Ex.: 0100111110011-0" MaxLength="14" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="EmissaoRG">Emissão do RG:</label>
-                                        <asp:TextBox runat="server" required="required" class="form-control"
-                                            type="date"
-                                            min="1980-01-01"
-                                            max="2020-12-31"
-                                            ID="txtDateEmissaoRG"
-                                            name="EmissaoRG" />
+                                        <asp:TextBox runat="server" required="required" class="form-control" type="date" min="1980-01-01" max="2020-12-31" ID="txtDateEmissaoRG" name="EmissaoRG" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="DataNascimento">Data de Nascimento:</label>
                                         <asp:TextBox runat="server" required="required" class="form-control"
-                                            type="date"
-                                            min="1980-01-01"
-                                            max="2020-12-31"
-                                            ID="txtDataNascimento"
-                                            name="DataNascimento" />
+                                            type="date" min="1980-01-01" max="2020-12-31" ID="txtDataNascimento"  name="DataNascimento" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -114,9 +88,12 @@
                         </div>
 
                     </div>
-                    <div class="box-footer">
-                        <div class="col-md-6">
-                            <asp:Button class="btn btn-primary" runat="server" ID="btnSalvar" Text="Salvar" />
+                    <div id="divBotoes" runat="server" class="box-footer">
+                        <div class="btn-group">
+                            <asp:LinkButton ID="btnSalvar" runat="server" class="btn btn-success"><i class="fa fa-save"></i> Salvar</asp:LinkButton>
+                        </div>
+                        <div class="btn-group">
+                            <asp:LinkButton ID="btnVoltar" runat="server" class="btn btn-warning"><i class="fa fa-mail-reply"></i> Voltar</asp:LinkButton>
                         </div>
                     </div>
                 </asp:Panel>
@@ -147,14 +124,10 @@
                                 <asp:LinkButton ID="btnLocalizar" runat="server" class="btn btn-default"><i class="fa fa-search"></i>Localizar</asp:LinkButton>
                             </div>
                             <div class="btn-group">
-                                <asp:LinkButton ID="btnNovo" runat="server" class="btn btn-info"><i class="fa fa-plus"></i>Novo</asp:LinkButton>
-                            </div>
-
-                            <div class="btn-group">
-                                <asp:LinkButton ID="btnVoltar" runat="server" class="btn btn-warning"><i class="fa fa-mail-reply"></i>Voltar</asp:LinkButton>
+                                <asp:LinkButton ID="btnNovo" runat="server" class="btn btn-info"><i class="fa fa-plus"></i>Cadastrar Endereço</asp:LinkButton>
                             </div>
                         </div>
-                        <div id="divDocumento" runat="server" class="box-footer">                            
+                        <div id="divDocumento" runat="server" class="box-footer">
                             <asp:GridView ID="grdDocumento" runat="server" CssClass="table table-bordered" PagerStyle-CssClass="paginacao" AllowSorting="True" AllowPaging="True" PageSize="20" AutoGenerateColumns="False" DataKeyNames="CI02_ID_DOCUMENTOS, CI01_ID_ALUNO">
                                 <HeaderStyle CssClass="bg-aqua" ForeColor="White" />
                                 <Columns>
@@ -197,7 +170,7 @@
                                             </div>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                </Columns>                                
+                                </Columns>
                             </asp:GridView>
                             <asp:Label ID="lblRegistros" runat="server" CssClass="badge bg-aqua" />
                         </div>
