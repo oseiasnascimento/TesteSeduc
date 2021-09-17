@@ -14,8 +14,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <asp:Label ID="lblRegistros" runat="server" CssClass="badge bg-aqua" />
-                                        <asp:DropDownList ID="listAluno" class="form-control" required="required" runat="server" ReadOnly="true" />
+                                        Alunos<br/>
+                                        <asp:DropDownList ID="drpTipoLicenca" ValidationGroup="form" AutoPostBack="true" runat="server" class="form-control select2 col-sm-12">
+                                        </asp:DropDownList>
+                                        <asp:RequiredFieldValidator ID="rfv1" runat="server" ValidationGroup="form" ControlToValidate="drpTipoLicenca" InitialValue="0" ErrorMessage="Obrigatório selecionar um tipo de licença" />
+                                        <asp:DropDownList ID="drpAluno" class="form-control" required="required" runat="server" AutoPostBack="True" />
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +117,6 @@
                     <div class="box-footer">
                         <div class="col-md-6">
                             <asp:Button class="btn btn-primary" runat="server" ID="btnSalvar" Text="Salvar" />
-                            <asp:Button class="btn btn-primary" runat="server" ID="btnEditar" Text="Salvar" />
                         </div>
                     </div>
                 </asp:Panel>
@@ -142,18 +144,17 @@
                         </div>
                         <div class="box-footer">
                             <div class="btn-group">
-                                <asp:LinkButton ID="btnLocalizar" runat="server" class="btn btn-default"><i class="fa fa-search"></i> Localizar</asp:LinkButton>
+                                <asp:LinkButton ID="btnLocalizar" runat="server" class="btn btn-default"><i class="fa fa-search"></i>Localizar</asp:LinkButton>
                             </div>
                             <div class="btn-group">
-                                <asp:LinkButton ID="btnNovo" runat="server" class="btn btn-info"><i class="fa fa-plus"></i>  Novo</asp:LinkButton>
+                                <asp:LinkButton ID="btnNovo" runat="server" class="btn btn-info"><i class="fa fa-plus"></i>Novo</asp:LinkButton>
                             </div>
 
                             <div class="btn-group">
-                                <asp:LinkButton ID="btnVoltar" runat="server" class="btn btn-info"><i class="fa fa-plus"></i>  Novo</asp:LinkButton>
+                                <asp:LinkButton ID="btnVoltar" runat="server" class="btn btn-warning"><i class="fa fa-mail-reply"></i>Voltar</asp:LinkButton>
                             </div>
                         </div>
-                        <div id="divDocumento" runat="server" class="box-footer">
-                            <asp:Label ID="lblRegistrosDoc" runat="server" CssClass="badge bg-aqua" />
+                        <div id="divDocumento" runat="server" class="box-footer">                            
                             <asp:GridView ID="grdDocumento" runat="server" CssClass="table table-bordered" PagerStyle-CssClass="paginacao" AllowSorting="True" AllowPaging="True" PageSize="20" AutoGenerateColumns="False" DataKeyNames="CI02_ID_DOCUMENTOS, CI01_ID_ALUNO">
                                 <HeaderStyle CssClass="bg-aqua" ForeColor="White" />
                                 <Columns>
@@ -196,8 +197,9 @@
                                             </div>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                </Columns>
+                                </Columns>                                
                             </asp:GridView>
+                            <asp:Label ID="lblRegistros" runat="server" CssClass="badge bg-aqua" />
                         </div>
                     </div>
                 </div>

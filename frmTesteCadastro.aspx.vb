@@ -9,7 +9,6 @@ Partial Class frmTesteCadastro
     Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If Not Page.IsPostBack Then
-            btnEditar.Visible = False
             CarregarListaAluno()
 
         End If
@@ -20,7 +19,6 @@ Partial Class frmTesteCadastro
         Validacao.Outros(txtCPF_Mae, False, "CPF",, Validacao.eFormato.CPF)
         Validacao.Outros(txtTelefoneResp, False, "CPF",, Validacao.eFormato.CELULAR)
         JavaScript.ExibirConfirmacao(btnSalvar, eTipoConfirmacao.SALVAR)
-        JavaScript.ExibirConfirmacao(btnEditar, eTipoConfirmacao.SALVAR)
 
     End Sub
 
@@ -44,7 +42,7 @@ Partial Class frmTesteCadastro
         Dim objDocumento As New Documento
         Dim Existe As Boolean = False
 
-        With objDocumento.Pesquisar(, listAluno.Text)
+        With objDocumento.Pesquisar(, drpAluno.Text)
             If .Rows.Count > 0 Then
                 Existe = True
             End If
@@ -57,7 +55,7 @@ Partial Class frmTesteCadastro
     Private Function VerificarNomeAluno() As Boolean
         Dim Existe As Boolean = False
 
-        If listAluno.Text = "Selecione um Aluno" Then
+        If drpAluno.Text = "Selecione um Aluno" Then
             MsgBox("Selecione um Aluno", eCategoriaMensagem.ALERTA)
             Existe = True
         End If
@@ -97,7 +95,7 @@ Partial Class frmTesteCadastro
                 MsgBox("Aluno já Cadastrado", eCategoriaMensagem.ALERTA)
                 Exit Sub
             End If
-            .CodigoAluno = listAluno.Text
+            .CodigoAluno = drpAluno.Text
             .CPF_MAE = Replace(Replace(txtCPF_Mae.Text, ".", ""), "-", "")
             .NomePai = txtNomePai.Text
             .CPF_PAI = Replace(Replace(txtCPF_Pai.Text, ".", ""), "-", "")
@@ -131,38 +129,6 @@ Partial Class frmTesteCadastro
         CarregarGridDocumentos()
     End Sub
 
-    Private Sub Editar()
-        Dim objDocumento As New Documento(ViewState("CodigoDocumento"))
-        With objDocumento
-
-            If VerificarDocumento() = False Then
-                MsgBox("Não foi possível Atualizar o Registro! Aluno não Cadastrado.", eCategoriaMensagem.ALERTA)
-                Exit Sub
-            End If
-
-            .CodigoAluno = listAluno.Text
-            .NomeMae = txtNomeMae.Text
-            .CPF_MAE = Replace(Replace(txtCPF_Mae.Text, ".", ""), "-", "")
-            .NomePai = txtNomePai.Text
-            .CPF_PAI = Replace(Replace(txtCPF_Pai.Text, ".", ""), "-", "")
-            .TelefoneResponsavel = txtTelefoneResp.Text
-            .RgAluno = txtRG.Text
-            .EmissaoAluno = txtDateEmissaoRG.Text
-            .NascimentoAluno = txtDataNascimento.Text
-            .DH_Cadastro = DateTime.Now
-            .SexoAluno = drpSexo.SelectedValue
-
-            .Salvar()
-            LimparCampos()
-            CarregarListaAluno()
-            'CarregarGridDocumentos()
-            MsgBox("Registro alterado com sucesso!", eCategoriaMensagem.SUCESSO)
-
-        End With
-        objDocumento = Nothing
-    End Sub
-
-
     Private Sub CarregarDocumento(ByVal Codigo As Integer)
         Dim objDocumento As New Documento(Codigo)
         Dim dat, dat2 As Date
@@ -173,7 +139,7 @@ Partial Class frmTesteCadastro
             dat = Convert.ToDateTime(.EmissaoAluno)
             dat2 = Convert.ToDateTime(.NascimentoAluno)
 
-            listAluno.Text = .CodigoAluno
+            drpAluno.Text = .CodigoAluno
             txtNomeMae.Text = .NomeMae
             txtNomePai.Text = .NomePai
             txtCPF_Mae.Text = .CPF_MAE
@@ -194,14 +160,12 @@ Partial Class frmTesteCadastro
 
 #Region "Eventos de Cadastro"
     Protected Sub btnSalvar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSalvar.Click
+
+        If VerificarDocumento() = False Then
+            MsgBox("Não foi possível Atualizar o Registro! Aluno não Cadastrado.", eCategoriaMensagem.ALERTA)
+            Exit Sub
+        End If
         Salvar()
-
-    End Sub
-
-    Protected Sub btnEditar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEditar.Click
-        Editar()
-
-
     End Sub
 
 #End Region
@@ -210,16 +174,16 @@ Partial Class frmTesteCadastro
     Private Sub CarregarListaAluno()
         Dim objAluno As New Aluno
 
-        listAluno.DataSource = objAluno.ObterTabela()
-        listAluno.DataValueField = "CI01_ID_ALUNO"
-        listAluno.DataTextField = "CI01_NM_ALUNO"
-        listAluno.DataBind()
-        listAluno.Items.Insert(0, "Selecione um Aluno")
-        listAluno.SelectedIndex = 0
+        With drpAluno
+            .DataSource = objAluno.ObterTabela()
+            .DataValueField = "CI01_ID_ALUNO"
+            .DataTextField = "CI01_NM_ALUNO"
+            .DataBind()
+            '.Items.Insert(0, "Selecione um Aluno")
+            .SelectedIndex = 0
 
+        End With
         objAluno = Nothing
-
-        lblRegistros.Text = DirectCast(listAluno.DataSource, Data.DataTable).Rows.Count & " Aluno(s)"
 
     End Sub
 
@@ -231,7 +195,7 @@ Partial Class frmTesteCadastro
 
         objDocumento = Nothing
 
-        lblRegistrosDoc.Text = DirectCast(grdDocumento.DataSource, Data.DataTable).Rows.Count & " Registro(s)"
+        lblRegistros.Text = DirectCast(grdDocumento.DataSource, Data.DataTable).Rows.Count & " Registro(s)"
     End Sub
 #End Region
 
@@ -246,7 +210,6 @@ Partial Class frmTesteCadastro
         ElseIf e.CommandName = "EDITAR" Then
             CarregarDocumento(grdDocumento.DataKeys(e.CommandArgument).Item(0))
             btnSalvar.Visible = False
-            btnEditar.Visible = True
             listagem.Visible = False
             cadastro.Visible = True
 
@@ -283,6 +246,8 @@ Partial Class frmTesteCadastro
         End Select
     End Sub
 
+
+
     Protected Sub btnLitagem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVoltar.Click
 
         cadastro.Visible = False
@@ -290,6 +255,16 @@ Partial Class frmTesteCadastro
         CarregarGridDocumentos()
 
     End Sub
+
+    Private Sub drpAluno_DataBound(sender As Object, e As EventArgs) Handles drpAluno.DataBound
+
+    End Sub
+
+    Private Sub drpAluno_TextChanged(sender As Object, e As EventArgs) Handles drpAluno.TextChanged
+
+    End Sub
+
+
 
 #End Region
 End Class
