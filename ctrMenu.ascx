@@ -25,15 +25,19 @@
         <li id="liHeaderAreaCadastro" runat="server" class="treeview">
             <a href="#">
                 <i class="fa fa-toggle-on"></i>
-                <span>Aréa de Cadastro</span>
+                <span>Aréa do Teste</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
+                <li id="liSubMenuAluno" runat="server" class="Progress">
+                    <asp:LinkButton ID="lnkAluno" runat="server"><a href="frmAluno.aspx"><i class="fa fa-save"></i>Cadastro de Aluno</a></asp:LinkButton></li>                
+            
                 <li id="liSubMenuCadastro" runat="server" class="Progress">
-                    <asp:LinkButton ID="lnkCadastro" runat="server"><a href="frmTesteCadastro.aspx"><i class="fa fa-save"></i>Teste Formulario Cadastro</a></asp:LinkButton></li>                
+                    <asp:LinkButton ID="lnkCadastro" runat="server"><a href="frmTesteCadastro.aspx"><i class="fa fa-save"></i>Cadastro de Documento</a></asp:LinkButton></li>                
             </ul>
         </li>
+     </ul>
 </section>
 
