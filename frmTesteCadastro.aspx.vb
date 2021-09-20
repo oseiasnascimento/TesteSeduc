@@ -221,7 +221,6 @@ Partial Class frmTesteCadastro
     End Sub
 
     Private Sub Informacao()
-
         Dim objAluno As New Aluno
         lblAluno.Text = "<b>Aluno:</b> " + objAluno.ObterUmAluno(ViewState("Aluno")).Rows(0)("CI01_NM_ALUNO").ToString
 
@@ -237,7 +236,6 @@ Partial Class frmTesteCadastro
 
         lblRegistros.Text = DirectCast(grdDocumento.DataSource, Data.DataTable).Rows.Count & " Registro(s)"
     End Sub
-
 
 #End Region
 
@@ -290,18 +288,8 @@ Partial Class frmTesteCadastro
         End Select
     End Sub
 
-
-
     Protected Sub btnVoltar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVoltar.Click
         HabilitarSecao()
-    End Sub
-
-    Private Sub drpAluno_DataBound(sender As Object, e As EventArgs) Handles drpAluno.DataBound
-
-    End Sub
-
-    Private Sub drpAluno_TextChanged(sender As Object, e As EventArgs) Handles drpAluno.TextChanged
-
     End Sub
 
     Private Sub btnLocalizar_Click(sender As Object, e As EventArgs) Handles btnLocalizar.Click
