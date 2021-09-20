@@ -156,7 +156,7 @@
                                         <ItemTemplate>
                                             <div class="btn-group">
                                                 <asp:LinkButton ID="lnkEditarDocumento" runat="server" class="btn btn-social-icon bg-blue" CommandName="EDITAR" ToolTip="EditarDocumento">
-                                                    <i id="iEditarDocumento" runat="server" class="fa fa-send"></i>
+                                                    <i id="iEditarDocumento" runat="server" class="fa fa-pencil"></i>
                                                 </asp:LinkButton>
                                             </div>
                                         </ItemTemplate>
@@ -165,7 +165,7 @@
                                         <ItemTemplate>
                                             <div class="btn-group">
                                                 <asp:LinkButton ID="lnkEnviarDocumento" runat="server" class="btn btn-social-icon bg-green" CommandName="ENVIAR" ToolTip="EnviarDocumento">
-                                                    <i id="iEnviarDocumento" runat="server" class="fa fa-mortar-board"></i>
+                                                    <i id="iEnviarDocumento" runat="server" class="fa fa-send"></i>
                                                 </asp:LinkButton>
                                             </div>
                                         </ItemTemplate>

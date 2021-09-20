@@ -58,10 +58,6 @@ Partial Class frmTesteCadastro
         Dim objDocumento As New Documento
         Dim Existe As Boolean = False
 
-        If VerificarNomeAluno() = True Then
-            Exit Function
-        End If
-
         With objDocumento.Pesquisar(, drpAluno.Text)
             If .Rows.Count > 0 Then
                 Existe = True
@@ -76,7 +72,6 @@ Partial Class frmTesteCadastro
         Dim Existe As Boolean = False
 
         If drpAluno.Text = "Selecione um Aluno" Then
-            MsgBox("Selecione um Aluno", eCategoriaMensagem.ALERTA)
             Existe = True
         End If
 
@@ -96,6 +91,7 @@ Partial Class frmTesteCadastro
         txtDateEmissaoRG.Text = ""
         txtDataNascimento.Text = ""
 
+        drpAluno.ClearSelection()
         drpSexo.ClearSelection()
 
         txtNomeMae.Focus()
@@ -113,6 +109,14 @@ Partial Class frmTesteCadastro
             End If
             If VerificarDocumento() = True Then
                 MsgBox("Aluno já Cadastrado", eCategoriaMensagem.ALERTA)
+                Exit Sub
+            End If
+            If txtDateEmissaoRG.Text = "" Then
+                MsgBox("Por favor insira um valor para Emissão do RG", eCategoriaMensagem.ALERTA)
+                Exit Sub
+            End If
+            If txtDataNascimento.Text = "" Then
+                MsgBox("Por favor insira um valor para Data de Nascimento", eCategoriaMensagem.ALERTA)
                 Exit Sub
             End If
             .CodigoAluno = drpAluno.Text
@@ -166,15 +170,12 @@ Partial Class frmTesteCadastro
             txtCPF_Pai.Text = .CPF_PAI
             txtTelefoneResp.Text = .TelefoneResponsavel
             txtRG.Text = .RgAluno
-
             txtDateEmissaoRG.Text = DoBanco(.EmissaoAluno, eTipoValor.DATA)
             txtDataNascimento.Text = DoBanco(.NascimentoAluno, eTipoValor.DATA)
-
-
             'txtDateEmissaoRG.Text = dat.ToString("yyyy-MM-dd")
             'txtDataNascimento.Text = dat2.ToString("yyyy-MM-dd")
             drpSexo.SelectedValue = .SexoAluno
-            MsgBox("Registro Carregado com sucesso!", eCategoriaMensagem.SUCESSO)
+            HabilitarCampos(True)
         End With
 
         objDocumento = Nothing
@@ -186,8 +187,8 @@ Partial Class frmTesteCadastro
 #Region "Eventos de Cadastro"
     Protected Sub btnSalvar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSalvar.Click
 
-        If VerificarDocumento() = False Then
-            MsgBox("Não foi possível Atualizar o Registro! Aluno não Cadastrado.", eCategoriaMensagem.ALERTA)
+        If VerificarNomeAluno() = True Then
+            MsgBox("Selecione um Aluno", eCategoriaMensagem.ALERTA)
             Exit Sub
         End If
         Salvar()
@@ -236,7 +237,6 @@ Partial Class frmTesteCadastro
 
         ElseIf e.CommandName = "EDITAR" Then
             CarregarDocumento(grdDocumento.DataKeys(e.CommandArgument).Item(0))
-            HabilitarCampos(True)
 
         ElseIf e.CommandName = "ENVIAR" Then
             Session("CodigoDocumento") = grdDocumento.DataKeys(e.CommandArgument).Item(0)
@@ -251,16 +251,15 @@ Partial Class frmTesteCadastro
 
             Case DataControlRowType.DataRow
 
-                Dim lnkEditarDocumento As New LinkButton
                 Dim lnkExcluirDocumento As New LinkButton
+                Dim lnkEditarDocumento As New LinkButton
                 Dim lnkEnviarDocumento As New LinkButton
-
-                lnkEditarDocumento = DirectCast(e.Row.Cells(ColunasGrid_grdDocumento.buttons).FindControl("lnkEditarDocumento"), LinkButton)
-                lnkEditarDocumento.CommandArgument = e.Row.RowIndex
-
 
                 lnkExcluirDocumento = DirectCast(e.Row.Cells(ColunasGrid_grdDocumento.buttons).FindControl("lnkExcluirDocumento"), LinkButton)
                 lnkExcluirDocumento.CommandArgument = e.Row.RowIndex
+
+                lnkEditarDocumento = DirectCast(e.Row.Cells(ColunasGrid_grdDocumento.buttons).FindControl("lnkEditarDocumento"), LinkButton)
+                lnkEditarDocumento.CommandArgument = e.Row.RowIndex
 
                 lnkEnviarDocumento = DirectCast(e.Row.Cells(ColunasGrid_grdDocumento.buttons).FindControl("lnkEnviarDocumento"), LinkButton)
                 lnkEnviarDocumento.CommandArgument = e.Row.RowIndex
@@ -299,9 +298,9 @@ Partial Class frmTesteCadastro
 
     Private Sub btnNovo_Click(sender As Object, e As EventArgs) Handles btnNovo.Click
         HabilitarSecao(True)
+        LimparCampos()
+
     End Sub
-
-
 
 #End Region
 End Class
