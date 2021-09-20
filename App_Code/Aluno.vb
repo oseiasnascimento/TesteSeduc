@@ -235,13 +235,32 @@ Public Class Aluno
         Return cnn.AbrirDataTable(strSQL.ToString)
     End Function
 
+    Public Function ObterUmAluno(Optional ByVal codigo As Integer = 0) As DataTable
+        Dim cnn As New Conexao
+        Dim dt As DataTable
+        Dim strSQL As New StringBuilder
+
+        strSQL.Append(" SELECT * ")
+        strSQL.Append("   FROM CI01_ALUNO")
+
+        If codigo > 0 Then
+            strSQL.Append(" WHERE CI01_ID_ALUNO =" & codigo)
+        End If
+
+        dt = cnn.AbrirDataTable(strSQL.ToString)
+
+        cnn = Nothing
+
+        Return dt
+    End Function
+
     Public Function ObterTabela() As DataTable
         Dim cnn As New Conexao
         Dim dt As DataTable
         Dim strSQL As New StringBuilder
 
-        strSQL.Append(" select * ")
-        strSQL.Append(" from CI01_ALUNO ORDER BY CI01_NM_ALUNO ASC")
+        strSQL.Append(" SELECT * ")
+        strSQL.Append("   FROM CI01_ALUNO ORDER BY CI01_NM_ALUNO ASC")
 
         dt = cnn.AbrirDataTable(strSQL.ToString)
 

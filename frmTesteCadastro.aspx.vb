@@ -81,6 +81,7 @@ Partial Class frmTesteCadastro
     Private Sub LimparCampos()
 
         ViewState("CodigoDocumento") = Nothing
+        ViewState("Aluno") = Nothing
 
         txtNomeMae.Text = ""
         txtNomePai.Text = ""
@@ -101,25 +102,19 @@ Partial Class frmTesteCadastro
         Dim objDocumento As New Documento(ViewState("CodigoDocumento"))
         With objDocumento
             .NomeMae = txtNomeMae.Text
-            If VerificarCpf() = True Then
-                Exit Sub
+            'If txtDateEmissaoRG.Text = "" Then
+            '    MsgBox("Por favor insira um valor para Emissão do RG", eCategoriaMensagem.ALERTA)
+            '    Exit Sub
+            'End If
+            'If txtDataNascimento.Text = "" Then
+            '    MsgBox("Por favor insira um valor para Data de Nascimento", eCategoriaMensagem.ALERTA)
+            '    Exit Sub
+            'End If
+            If drpAluno.SelectedIndex = 0 Then
+                .CodigoAluno = ViewState("Aluno")
+            Else
+                .CodigoAluno = drpAluno.Text
             End If
-            If VerificarNomeAluno() = True Then
-                Exit Sub
-            End If
-            If VerificarDocumento() = True Then
-                MsgBox("Aluno já Cadastrado", eCategoriaMensagem.ALERTA)
-                Exit Sub
-            End If
-            If txtDateEmissaoRG.Text = "" Then
-                MsgBox("Por favor insira um valor para Emissão do RG", eCategoriaMensagem.ALERTA)
-                Exit Sub
-            End If
-            If txtDataNascimento.Text = "" Then
-                MsgBox("Por favor insira um valor para Data de Nascimento", eCategoriaMensagem.ALERTA)
-                Exit Sub
-            End If
-            .CodigoAluno = drpAluno.Text
             .CPF_MAE = Replace(Replace(txtCPF_Mae.Text, ".", ""), "-", "")
             .NomePai = txtNomePai.Text
             .CPF_PAI = Replace(Replace(txtCPF_Pai.Text, ".", ""), "-", "")
@@ -155,13 +150,13 @@ Partial Class frmTesteCadastro
 
     Private Sub CarregarDocumento(ByVal Codigo As Integer)
         Dim objDocumento As New Documento(Codigo)
-        'Dim dat, dat2 As Date
+        Dim dateEmissaoAluno, dateNascimentoAluno As Date
 
         With objDocumento
             ViewState("CodigoDocumento") = .CodigoDocumento
 
-            'dat = Convert.ToDateTime(.EmissaoAluno)
-            'dat2 = Convert.ToDateTime(.NascimentoAluno)
+            dateEmissaoAluno = DoBanco(.EmissaoAluno, eTipoValor.DATA_COMPLETA)
+            dateNascimentoAluno = DoBanco(.NascimentoAluno, eTipoValor.DATA_COMPLETA)
 
             drpAluno.Text = .CodigoAluno
             txtNomeMae.Text = .NomeMae
@@ -170,12 +165,9 @@ Partial Class frmTesteCadastro
             txtCPF_Pai.Text = .CPF_PAI
             txtTelefoneResp.Text = .TelefoneResponsavel
             txtRG.Text = .RgAluno
-            txtDateEmissaoRG.Text = DoBanco(.EmissaoAluno, eTipoValor.DATA)
-            txtDataNascimento.Text = DoBanco(.NascimentoAluno, eTipoValor.DATA)
-            'txtDateEmissaoRG.Text = dat.ToString("yyyy-MM-dd")
-            'txtDataNascimento.Text = dat2.ToString("yyyy-MM-dd")
+            txtDateEmissaoRG.Text = dateEmissaoAluno.ToString("yyyy-MM-dd")
+            txtDataNascimento.Text = dateNascimentoAluno.ToString("yyyy-MM-dd")
             drpSexo.SelectedValue = .SexoAluno
-            HabilitarCampos(True)
         End With
 
         objDocumento = Nothing
@@ -187,9 +179,24 @@ Partial Class frmTesteCadastro
 #Region "Eventos de Cadastro"
     Protected Sub btnSalvar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSalvar.Click
 
-        If VerificarNomeAluno() = True Then
-            MsgBox("Selecione um Aluno", eCategoriaMensagem.ALERTA)
+        If ViewState("Aluno") = Nothing Then
+            If VerificarNomeAluno() = True Then
+                MsgBox("Selecione um Aluno", eCategoriaMensagem.ALERTA)
+                Exit Sub
+            End If
+            If VerificarDocumento() = True Then
+                MsgBox("Aluno já Cadastrado", eCategoriaMensagem.ALERTA)
+                Exit Sub
+            End If
+            If VerificarCpf() = False Then
+                Salvar()
+                HabilitarSecao()
+            End If
             Exit Sub
+        Else
+            Salvar()
+            LimparCampos()
+            HabilitarSecao()
         End If
         Salvar()
     End Sub
@@ -210,6 +217,13 @@ Partial Class frmTesteCadastro
 
         End With
         objAluno = Nothing
+
+    End Sub
+
+    Private Sub Informacao()
+
+        Dim objAluno As New Aluno
+        lblAluno.Text = "<b>Aluno:</b> " + objAluno.ObterUmAluno(ViewState("Aluno")).Rows(0)("CI01_NM_ALUNO").ToString
 
     End Sub
 
@@ -236,8 +250,14 @@ Partial Class frmTesteCadastro
             Excluir(grdDocumento.DataKeys(e.CommandArgument).Item(0))
 
         ElseIf e.CommandName = "EDITAR" Then
-            CarregarDocumento(grdDocumento.DataKeys(e.CommandArgument).Item(0))
-
+            ViewState("CodigoDocumento") = grdDocumento.DataKeys(e.CommandArgument).Item(0)
+            ViewState("Aluno") = grdDocumento.DataKeys(e.CommandArgument).Item(1)
+            CarregarDocumento(ViewState("CodigoDocumento"))
+            HabilitarSecao(True)
+            HabilitarCampos(True)
+            Informacao()
+            drpAluno.Visible = False
+            lblAlunos.Visible = False
         ElseIf e.CommandName = "ENVIAR" Then
             Session("CodigoDocumento") = grdDocumento.DataKeys(e.CommandArgument).Item(0)
             Server.Transfer("frmTesteSessionState.ASPX")
@@ -299,6 +319,7 @@ Partial Class frmTesteCadastro
     Private Sub btnNovo_Click(sender As Object, e As EventArgs) Handles btnNovo.Click
         HabilitarSecao(True)
         LimparCampos()
+        CarregarListaAluno()
 
     End Sub
 

@@ -4,6 +4,26 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
+    <section id="divInformacoes" runat="server" class="content" style="min-height: 0px !important; padding-bottom: 0px !important;">
+        <div class="callout callout-info">
+            <div class="row">
+                <div class="col-sm-12">
+                    <asp:Label ID="lblAluno" runat="server" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <asp:Label ID="lblEtapa" runat="server" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <asp:Label ID="lblPeriodo" runat="server" />
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="cadastro" runat="server" class="content">
         <asp:Panel ID="pnlCadastro" runat="server">
             <div class="box box-primary">
@@ -14,7 +34,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        Alunos<br />
+                                         <label ID="lblAlunos" runat="server" title="Alunos">Alunos</label><br />
                                         <asp:DropDownList ID="drpAluno" ValidationGroup="form" AutoPostBack="true" runat="server" class="form-control select2 col-sm-12" />
                                     </div>
                                 </div>
@@ -68,7 +88,7 @@
                                     <div class="form-group">
                                         <label for="DataNascimento">Data de Nascimento:</label>
                                         <asp:TextBox runat="server" required="required" class="form-control"
-                                            type="date" min="1980-01-01" max="2020-12-31" ID="txtDataNascimento"  name="DataNascimento" />
+                                            type="date" min="1980-01-01" max="2020-12-31" ID="txtDataNascimento" name="DataNascimento" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -128,7 +148,8 @@
                             </div>
                         </div>
                         <div id="divDocumento" runat="server" class="box-footer">
-                            <asp:GridView ID="grdDocumento" runat="server" CssClass="table table-bordered" PagerStyle-CssClass="paginacao" AllowSorting="True" AllowPaging="True" PageSize="20" AutoGenerateColumns="False" DataKeyNames="CI02_ID_DOCUMENTOS, CI01_ID_ALUNO">
+                            <asp:GridView ID="grdDocumento" runat="server" CssClass="table table-bordered" PagerStyle-CssClass="paginacao" AllowSorting="True" AllowPaging="True" PageSize="20" AutoGenerateColumns="False" 
+                                DataKeyNames="CI02_ID_DOCUMENTOS, CI01_ID_ALUNO">
                                 <HeaderStyle CssClass="bg-aqua" ForeColor="White" />
                                 <Columns>
                                     <asp:BoundField DataField="CI02_ID_DOCUMENTOS" SortExpression="CI02_ID_DOCUMENTOS" HeaderText="Codigo" />
