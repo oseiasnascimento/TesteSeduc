@@ -58,6 +58,10 @@ Partial Class frmTesteCadastro
         Dim objDocumento As New Documento
         Dim Existe As Boolean = False
 
+        If VerificarNomeAluno() = True Then
+            Exit Function
+        End If
+
         With objDocumento.Pesquisar(, drpAluno.Text)
             If .Rows.Count > 0 Then
                 Existe = True
