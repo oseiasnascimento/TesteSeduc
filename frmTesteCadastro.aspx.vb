@@ -12,6 +12,7 @@ Partial Class frmTesteCadastro
             CarregarListaAluno()
             HabilitarSecao()
             HabilitarCampos()
+            divInformacoes.Visible = False
         End If
 
         Validacao.Outros(txtCPF_Pai, False, "CPF",, Validacao.eFormato.CPF)
@@ -23,8 +24,8 @@ Partial Class frmTesteCadastro
 #Region "Funções de Cadastro"
 
     Private Sub HabilitarSecao(Optional hab As Boolean = False)
-        cadastro.Visible = hab
-        listagem.Visible = Not hab
+        divCadastro.Visible = hab
+        divListagem.Visible = Not hab
     End Sub
 
     Private Sub HabilitarCampos(Optional hab As Boolean = False)
@@ -254,6 +255,7 @@ Partial Class frmTesteCadastro
             HabilitarSecao(True)
             HabilitarCampos(True)
             Informacao()
+            divInformacoes.Visible = True
             drpAluno.Visible = False
             lblAlunos.Visible = False
         ElseIf e.CommandName = "ENVIAR" Then
@@ -289,6 +291,7 @@ Partial Class frmTesteCadastro
 
     Protected Sub btnVoltar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnVoltar.Click
         HabilitarSecao()
+        divInformacoes.Visible = False
     End Sub
 
     Private Sub btnLocalizar_Click(sender As Object, e As EventArgs) Handles btnLocalizar.Click

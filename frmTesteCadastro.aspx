@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
-    <section id="divInformacoes" runat="server" class="content" style="min-height: 0px !important; padding-bottom: 0px !important;">
+    <section id="divInformacoes" runat="server" class="content" style="min-height: 0px !important; padding-bottom: 0px !important; font-size: 2rem">
         <div class="callout callout-info">
             <div class="row">
                 <div class="col-sm-12">
@@ -24,7 +24,7 @@
         </div>
     </section>
 
-    <section id="cadastro" runat="server" class="content">
+    <section id="divCadastro" runat="server" class="content">
         <asp:Panel ID="pnlCadastro" runat="server">
             <div class="box box-primary">
                 <h4 class="page-header">Teste Formulario Cadastro</h4>
@@ -121,7 +121,7 @@
         </asp:Panel>
     </section>
 
-    <section id="listagem" runat="server" class="content">
+    <section id="divListagem" runat="server" class="content">
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">

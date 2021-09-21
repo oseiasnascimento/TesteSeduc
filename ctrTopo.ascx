@@ -20,7 +20,7 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="glyphicon glyphicon-user"></i>
+                                <i class="fa fa-user"></i>
                                 <span><asp:Label ID="lblUsuario" runat="server" /><i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu" id="divUsuario" runat="server">
