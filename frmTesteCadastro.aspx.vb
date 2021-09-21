@@ -258,8 +258,7 @@ Partial Class frmTesteCadastro
             lblAlunos.Visible = False
         ElseIf e.CommandName = "ENVIAR" Then
             Session("CodigoDocumento") = grdDocumento.DataKeys(e.CommandArgument).Item(0)
-            Server.Transfer("frmTesteSessionState.ASPX")
-
+            Server.Transfer("frmTesteSessionState.aspx")
         End If
     End Sub
 
