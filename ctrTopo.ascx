@@ -12,7 +12,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    
+                    <%--Topo Menu --%>
                 </a>
                 <a style="font-size: 20px;font-family: 'Kaushan Script', cursive;font-weight: 500; line-height: 50px; color: #f9f9f9; cursor:pointer;" data-toggle="offcanvas" role="button"> Menu</a>                
                 <div class="navbar-right">
