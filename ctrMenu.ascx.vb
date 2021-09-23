@@ -6,7 +6,7 @@ Partial Class ctrMenu
     Protected Sub NewExtranet_ctrMenu_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         If Not Page.IsPostBack Then
-
+            'DESNVOLVIMENTO NECESSÁRIO PARA O MENU
         End If
 
     End Sub

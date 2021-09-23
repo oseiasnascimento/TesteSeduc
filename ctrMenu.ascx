@@ -33,7 +33,7 @@
             <ul class="treeview-menu">
                 <li id="liSubMenuAluno" runat="server" class="Progress">
                     <asp:LinkButton ID="lnkAluno" runat="server"><a href="frmAluno.aspx"><i class="fa fa-save"></i>Cadastro de Aluno</a></asp:LinkButton></li>                
-            
+                 <%--ESSES LINKBUTTON PODEM SER FEITOS NO ctrMenu.ascx.vb--%>
                 <li id="liSubMenuCadastro" runat="server" class="Progress">
                     <asp:LinkButton ID="lnkCadastro" runat="server"><a href="frmTesteCadastro.aspx"><i class="fa fa-save"></i>Cadastro de Documento</a></asp:LinkButton></li>                
             </ul>
